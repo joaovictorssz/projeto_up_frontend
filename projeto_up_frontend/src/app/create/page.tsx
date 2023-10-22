@@ -34,7 +34,10 @@ export default function Create(){
             }
         })
         .catch((err)=>{
-            toast.error(err)
+            if(err.response.status === 400){
+                toast.error("Email já cadastrado")
+                return
+            }
         })
     }
 
