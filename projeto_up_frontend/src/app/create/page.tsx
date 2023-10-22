@@ -29,6 +29,9 @@ export default function Create(){
                 sessionStorage.setItem("token", JSON.stringify(res.data))
                 push('/login')
             }
+            if(res.status === 400){
+                toast.error("Esse email já foi cadastrado")
+            }
         })
         .catch((err)=>{
             toast.error(err)
