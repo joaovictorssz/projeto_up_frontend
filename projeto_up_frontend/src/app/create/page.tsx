@@ -22,7 +22,7 @@ export default function Create(){
             toast.error("As senhas devem ser iguais")
             return
         }
-        await axios.post(`${process.env.NEXT_PUBLIC_API}/auth/register`, {...data, auditor: false})
+        await axios.post(`${process.env.NEXT_PUBLIC_API}/auth/register`, {...data, auditor: false, qtd_cadastros: 0})
         .then(res => {
             if(res.status === 200){
                 toast.success("Cadastrado com sucesso!")
