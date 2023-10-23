@@ -43,7 +43,7 @@ export default function AddFamily(){
         console.log(data)
 
         
-        axios.post(`${process.env.NEXT_PUBLIC_API}/family/register`, {...data, composicao_familiar: familyMembers, cadastrado_por: user?.username, data_de_cadastro: dataFormatada,  id_voluntario: user?._id})
+        axios.post(`${process.env.NEXT_PUBLIC_API}/family/register`, {...data, composicao_familiar: familyMembers, cadastrado_por: user?.username, data_de_cadastro: dataFormatada,  id_voluntario: user?._id, cestas_entregues: []})
         .then(res=>{
             toast.success("Cadastro realizado com sucesso")
             axios.put(`${process.env.NEXT_PUBLIC_API}/users/update/${user?._id}`, {qtd_cadastros: user?.qtd_cadastros! + 1})

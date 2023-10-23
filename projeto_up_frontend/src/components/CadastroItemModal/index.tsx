@@ -11,6 +11,7 @@ import DadosMoradiaDetalhes from './DadosMoradiaDetalhes';
 import SituacaoEconomicaFamiliarDetalhes from './SituacaoEconomicaDetalhes';
 import ComposicaoFamiliarDetalhes from './ComposicaoFamiliar';
 import DeletarCadastro from '../DeletarCadastroAlerta';
+import CestasEntreguesDetalhes from './CestasEntregues';
 
 export default function CadastroItemModal({familia}:{familia: Familia}){ 
 
@@ -30,10 +31,11 @@ export default function CadastroItemModal({familia}:{familia: Familia}){
             {currentSection === 1 && 'Dados da moradia'}
             {currentSection === 2 && 'Situação econômica familiar'}
             {currentSection === 3 && 'Composição familiar'}
+            {currentSection === 4 && 'Cestas entregues'}
           </span>
           <section>
             {currentSection !== 0 && <button className='mx-4' onClick={()=>{if(currentSection !== 0){setCurrentSection(currentSection-1)}}}><GrPrevious/></button>}
-            <button onClick={()=>{if(currentSection !== 3){setCurrentSection(currentSection+1)}}} className='mx-4'><GrNext className=""/></button>
+            <button onClick={()=>{if(currentSection !== 4){setCurrentSection(currentSection+1)}}} className='mx-4'><GrNext className=""/></button>
           </section>
         </Dialog.Title>
         
@@ -41,6 +43,7 @@ export default function CadastroItemModal({familia}:{familia: Familia}){
         {currentSection === 1 && <DadosMoradiaDetalhes dados_moradia={familia.dados_moradia}/>}
         {currentSection === 2 && <SituacaoEconomicaFamiliarDetalhes situacao_economica_familiar={familia.situacao_economica_familiar}/>}
         {currentSection === 3 && <ComposicaoFamiliarDetalhes composicao_familiar={familia.composicao_familiar}/>}
+        {currentSection === 4 && <CestasEntreguesDetalhes cestas_entregues={familia.cestas_entregues} _id={familia._id}/>}
         <div className="mt-[25px] flex justify-end">
 
         </div>

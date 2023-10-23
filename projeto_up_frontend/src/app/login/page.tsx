@@ -5,7 +5,8 @@ import axios from 'axios'
 import {useForm} from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
+import  logo from '@/assets/logo.png'
 type LoginFormType = {
     email: string,
     password: string
@@ -25,16 +26,17 @@ export default function Login(){
             }
         })
         .catch((err)=>{
-            toast.error(err)
+            toast.error(err.response.data.message)
+            return
         })
     }
 
     return(
         <div className="w-full h-full flex bg-sky-800 justify-center items-center">
             <section className="bg-white h-3/4 sm:px-24 px-12  flex flex-col items-center">
-                <span className="h-1/5 flex flex-col justify-end items-center">
+                <span className="mt-6 h-1/5 flex flex-col justify-end items-center">
                    
-                    <h1 className="text-2xl font-semibold">Projeto UP</h1>
+                    <Image width={120} src={logo} alt="logo"/>
                     <p className="text-slate-500">Bem-vindo de volta!</p>
                 </span>
 

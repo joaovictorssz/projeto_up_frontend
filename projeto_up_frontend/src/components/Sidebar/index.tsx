@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
+import  logo from '@/assets/logo.png'
 
 export default function Sidebar(){
 
@@ -11,7 +13,7 @@ export default function Sidebar(){
         <aside className="w-full h-full flex flex-col px-5 border-r border-slate-200">
 
             <span className="flex p-7 justify-center items-center border-b border-slate-200">
-                <h1>Projeto UP</h1>
+            <Image width={80} src={logo} alt="logo"/>
             </span>
 
             <main className="flex flex-col font-semibold text-slate-600 py-10">

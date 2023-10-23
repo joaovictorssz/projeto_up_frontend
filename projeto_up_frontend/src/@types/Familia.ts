@@ -40,6 +40,11 @@ export interface ComposicaoFamiliar {
     renda_mensal?: string;
 }
 
+export interface CestasEntregues {
+    data_de_entrega: string,
+    voluntario: string
+}
+
 export interface Familia{
     _id: string,
     dados_pessoais: DadosPessoais,
@@ -48,5 +53,6 @@ export interface Familia{
     composicao_familiar: ComposicaoFamiliar[],
     cadastrado_por: string,
     data_de_cadastro: string,
-    id_voluntario: string
+    id_voluntario: string,
+    cestas_entregues: CestasEntregues[]
 }

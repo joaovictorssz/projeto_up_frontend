@@ -61,6 +61,8 @@ export default function Create(){
 
                     <button type="submit" className="rounded mt-6 hover:bg-sky-900 transition-colors bg-sky-800 text-white font-semibold py-3">Cadastrar</button>
                 </form>
+                
+                <button className="mt-4 text-sky-800"><Link href={'/login'}>Voltar para Login</Link></button>
            
             </section>
         </div>
