@@ -7,6 +7,7 @@ import { BsTrashFill } from 'react-icons/bs'
 import {useForm} from 'react-hook-form'
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type FormType = {
     dados_pessoais: DadosPessoais,
@@ -19,6 +20,8 @@ export default function AddFamily(){
     const { register, handleSubmit }  = useForm<FormType>()
     const dataDeHoje = new Date();
     const { user } = useUser()
+
+    const { push } = useRouter()
 
     const dia = String(dataDeHoje.getDate()).padStart(2, '0');
     const mes = String(dataDeHoje.getMonth() + 1).padStart(2, '0'); // Lembre-se de adicionar +1, pois os meses são baseados em zero (janeiro é 0)
@@ -45,8 +48,10 @@ export default function AddFamily(){
         
         axios.post(`${process.env.NEXT_PUBLIC_API}/family/register`, {...data, composicao_familiar: familyMembers, cadastrado_por: user?.username, data_de_cadastro: dataFormatada,  id_voluntario: user?._id, cestas_entregues: []})
         .then(res=>{
+            console.log(res)
             toast.success("Cadastro realizado com sucesso")
             axios.put(`${process.env.NEXT_PUBLIC_API}/users/update/${user?._id}`, {qtd_cadastros: user?.qtd_cadastros! + 1})
+            push('/')
         })
         .catch(erro => {
             if(erro.response.data.message === 'Endereco já cadastrado'){
@@ -67,7 +72,7 @@ export default function AddFamily(){
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     <section className="flex flex-col">
                         <span>Nome:</span>
-                        <input {...register('dados_pessoais.nome')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
+                        <input required {...register('dados_pessoais.nome')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
                     </section>
 
                     <section className="flex flex-col">
@@ -119,17 +124,17 @@ export default function AddFamily(){
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <section className="flex flex-col">
                         <span>Rua:</span>
-                        <input  {...register('dados_pessoais.endereco')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
+                        <input required {...register('dados_pessoais.endereco')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
                     </section>
 
                     <section className="flex flex-col">
                         <span>Bairro:</span>
-                        <input  {...register('dados_pessoais.bairro')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
+                        <input required  {...register('dados_pessoais.bairro')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
                     </section>
 
                     <section className="flex flex-col">
                         <span>Número:</span>
-                        <input  {...register('dados_pessoais.numero')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
+                        <input required {...register('dados_pessoais.numero')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
                     </section>
                 </div>
 
@@ -141,7 +146,7 @@ export default function AddFamily(){
 
                     <section className="flex flex-col">
                         <span>Telefone 1:</span>
-                        <input  {...register('dados_pessoais.telefone_1')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
+                        <input required {...register('dados_pessoais.telefone_1')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
                     </section>
 
                     <section className="flex flex-col">
