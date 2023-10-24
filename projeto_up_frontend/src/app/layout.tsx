@@ -29,7 +29,7 @@ export default function RootLayout({
         
           <PrivateRoute>
           <main className='w-screen h-screen flex'>
-            <div className='h-full w-2/12'>
+            <div className='h-full hidden md:w-2/12 md:block lg:w-2/12 lg:block'>
               <Sidebar/>
             </div>
             <div className='w-full h-full flex flex-col'>

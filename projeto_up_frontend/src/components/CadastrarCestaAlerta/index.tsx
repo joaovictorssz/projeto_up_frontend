@@ -52,7 +52,7 @@ export default function CadastrarCestaAlerta({cestas_cadastradas, _id}:{cestas_c
             </button>
           </AlertDialog.Cancel>
           <AlertDialog.Action asChild>
-            <button onClick={()=>atualizarCestasCadastradas()} className="text-red11 bg-red4 hover:bg-red5 focus:shadow-red7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px]">
+            <button onClick={()=>atualizarCestasCadastradas()} className="text-green11 bg-green4 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none outline-none focus:shadow-[0_0_0_2px]">
               Sim, desejo
             </button>
           </AlertDialog.Action>

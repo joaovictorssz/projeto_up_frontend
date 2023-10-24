@@ -63,18 +63,32 @@ export default function Users(){
         
         {profiles.map((profile, id)=>{
             return (
+                <>
                 <div key={id} className="shadow p-4 flex items-center">
+                    <div className="flex items-center">
                     <span className="bg-sky-800 text-white p-4 rounded">{<BiSolidUser/>}</span>
-                    <section className="grid grid-rows-1 grid-cols-3 w-3/4  items-center">
+                    <section className="grid grid-rows-1 grid-cols-3 w-3/4 text-sm md:text-basem lg:text-base items-center">
                     
-                        <span className="ml-10">Nome: {profile.username}</span>
-                        <span className="ml-20">Email: {profile.email}</span>
-                        <span className="ml-20">Quantidade de cadastros: {profile.qtd_cadastros ? profile.qtd_cadastros : 0}</span>
+                        <span className="ml-10 w-full">Nome: {profile.username}</span>
+                        <span className="ml-20 w-full hidden md:hidden lg:block">Email: {profile.email}</span>
+                        <span className="ml-20 hidden w-full md:hidden lg:block">Quantidade de cadastros: {profile.qtd_cadastros ? profile.qtd_cadastros : 0}</span>
                     </section>
 
+                    </div>
+                    <footer className="flex">
                     {profile.auditor ? <button onClick={()=>removerAuditor(profile._id)} className="bg-yellow-100 p-3 rounded text-yellow-800 font-semibold hover:bg-yellow-200 transition-colors">Remover auditor</button> : <button onClick={()=>tornarAuditor(profile._id)} className="bg-green-200 border-2 text-green-900 font-semibold rounded p-3">Tornar auditor</button>}
-                <DeletarUsuario _id={profile._id}/>
+                    <DeletarUsuario _id={profile._id}/>
+                    </footer>
+
+                    
                 </div>
+
+                <footer className="block md:block lg:hidden my-4 text-sm flex justify-between">
+                <span>Email: {profile.email}</span>
+                <span>Qtd. de cadastros: {profile.qtd_cadastros}</span>
+                <hr />
+                </footer>
+            </>
             )
         })}
         

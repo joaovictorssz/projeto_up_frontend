@@ -64,7 +64,7 @@ export default function AddFamily(){
 
                 <h1 className="font-semibold my-4">Dados pessoais</h1>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     <section className="flex flex-col">
                         <span>Nome:</span>
                         <input {...register('dados_pessoais.nome')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
@@ -76,7 +76,7 @@ export default function AddFamily(){
                     </section>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <section className="flex flex-col">
                         <span>Sexo:</span>
                         <select  {...register('dados_pessoais.sexo')} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3">
@@ -96,7 +96,7 @@ export default function AddFamily(){
                     </section>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     <section className="flex flex-col">
                         <span>Estado civil:</span>
                         <select  {...register('dados_pessoais.estado_civil')} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3">
@@ -116,7 +116,7 @@ export default function AddFamily(){
                 </div>
 
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <section className="flex flex-col">
                         <span>Rua:</span>
                         <input  {...register('dados_pessoais.endereco')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
@@ -133,7 +133,7 @@ export default function AddFamily(){
                     </section>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <section className="flex flex-col">
                         <span>Ponto de referência:</span>
                         <input  {...register('dados_pessoais.ponto_de_referencia')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
@@ -280,8 +280,8 @@ export default function AddFamily(){
             <section  className="border my-4 border-slate-200 p-4 rounded flex flex-col">
                 <h1 className="font-semibold my-4">Composição familiar</h1>
 
-                <div className="w-full h-full flex">
-                <aside className="w-3/5">
+                <div className="w-full h-full flex flex-col md:flex-row lg:flex-row">
+                <aside className="w-full md:w-3/5 lg:w-3/5">
                     <div className="grid grid-cols-2 gap-4">
                         <section className="flex flex-col">
                             <span>Nome:</span>
@@ -324,9 +324,47 @@ export default function AddFamily(){
 
                     <button type="button" onClick={addFamilyMember} className="my-4 bg-sky-800 rounded px-2 py-3 text-white font-semibold">Adicionar</button>
 
-                    
+                    {familyMembers.length === 0 && <p>Nenhum familiar cadastrado</p>}
+                    {familyMembers.map((family_member, index)=>{
+                        return (
+                            <div key={index} className="bg-slate-50 p-3 relative my-4">
+                                <button type="button" onClick={()=>removeFammilyMMember(index)} className="absolute top-2 right-2 hover:text-red-500 transition-colors"><BsTrashFill/></button>
+                                <div className="flex flex-col">
+                                <section className="flex">
+                                    <span className="font-semibold">Nome: </span>
+                                    <span>{family_member.nome}</span>
+                                </section>
+
+                                <section className="flex">
+                                    <span className="font-semibold">Idade: </span>
+                                    <span>{family_member.idade}</span>
+                                </section>
+
+                                <section className="flex">
+                                    <span className="font-semibold">Sexo: </span>
+                                    <span>{family_member.sexo}</span>
+                                </section>
+
+                                <section className="flex">
+                                    <span className="font-semibold">Parentesco: </span>
+                                    <span>{family_member.parentesco}</span>
+                                </section>
+
+                                <section className="flex">
+                                    <span className="font-semibold">Ocupação: </span>
+                                    <span>{family_member.ocupacao}</span>
+                                </section>
+
+                                <section className="flex">
+                                    <span className="font-semibold">Renda mensal: </span>
+                                    <span>{family_member.renda_mensal}</span>
+                                </section>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </aside> 
-                <aside  className="w-2/5 h-full border border-slate-200 p-4 rounded mx-4 max-h-96 overflow-y-auto">
+                <aside  className="hidden md:block w-2/5 lg:block h-full border border-slate-200 p-4 rounded mx-4 max-h-96 overflow-y-auto">
                     {familyMembers.length === 0 && <p>Nenhum familiar cadastrado</p>}
                     {familyMembers.map((family_member, index)=>{
                         return (

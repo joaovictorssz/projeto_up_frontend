@@ -12,9 +12,9 @@ export default function CadastroItem({familia, id}:{familia: Familia, id: number
             
             <div className="flex justify-between w-full px-6">
             <h1 className="font-semibold">{familia.dados_pessoais.nome}</h1>
-            <span className="w-1/4"><span className="italic">Bairro:</span> {familia.dados_pessoais.bairro}</span>
-                <span className="w-1/4"><span className="italic">Endereço:</span> {familia.dados_pessoais.endereco}, {familia.dados_pessoais.numero}</span>
-                <span className="w-1/4"><span className="italic">Cadastro em:</span> {familia.data_de_cadastro}</span>
+            <span className="hidden md:block lg:block w-1/4"><span className="italic">Bairro:</span> {familia.dados_pessoais.bairro}</span>
+                <span className="hidden md:block lg:block w-1/4"><span className="italic">Endereço:</span> {familia.dados_pessoais.endereco}, {familia.dados_pessoais.numero}</span>
+                <span className="hidden md:block lg:block w-1/4"><span className="italic">Cadastro em:</span> {familia.data_de_cadastro}</span>
                 
             </div>
 
