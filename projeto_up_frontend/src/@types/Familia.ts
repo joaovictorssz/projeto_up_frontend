@@ -1,6 +1,6 @@
 export interface DadosPessoais {
     nome: string;
-    nome_social?: string;
+    cpf: string;
     sexo?: string;
     data_nascimento?: string;
     idade?: number;
@@ -29,6 +29,7 @@ export interface SituacaoEconomicaFamilair {
     atividade_remunerada?: string;
     profissao?: string;
     renda_recebida?: string;
+    auxilio_do_governo?: string;
 }
 
 export interface ComposicaoFamiliar {
@@ -38,6 +39,7 @@ export interface ComposicaoFamiliar {
     parentesco?: string;
     ocupacao?: string;
     renda_mensal?: string;
+    cpf?: string;
 }
 
 export interface CestasEntregues {
@@ -54,5 +56,6 @@ export interface Familia{
     cadastrado_por: string,
     data_de_cadastro: string,
     id_voluntario: string,
-    cestas_entregues: CestasEntregues[]
+    cestas_entregues: CestasEntregues[],
+    observacoes: string
 }

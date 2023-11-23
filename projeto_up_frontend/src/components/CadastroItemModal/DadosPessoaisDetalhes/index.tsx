@@ -55,7 +55,7 @@ export default function DadosPessoaisDetalhes({dados_pessoais}: {dados_pessoais:
 
             <span className="flex items-center my-4">
                 <h3 className="mr-4 font-semibold  w-32">Nome social:</h3>
-                <p className="p-2 border border-slate-200 w-full rounded">{dados_pessoais.nome_social ? dados_pessoais.nome_social : 'Não informado'}</p>
+                <p className="p-2 border border-slate-200 w-full rounded">{dados_pessoais.cpf ? dados_pessoais.cpf : 'Não informado'}</p>
             </span> 
             <span className="flex items-center my-4">
                 <h3 className="mr-4 font-semibold  w-32">Sexo:</h3>

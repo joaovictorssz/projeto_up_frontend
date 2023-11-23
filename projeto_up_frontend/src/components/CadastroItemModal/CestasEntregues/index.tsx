@@ -29,10 +29,6 @@ export default function CestasEntreguesDetalhes({cestas_entregues, _id}: {cestas
             </div>
             
             }
-
-            <section className="w-full flex justify-end mt-6">
-                <CadastrarCestaAlerta _id={_id} cestas_cadastradas={cestas_entregues}/>
-            </section>
         </div>
     )
 }

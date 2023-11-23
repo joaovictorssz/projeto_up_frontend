@@ -70,8 +70,8 @@ export default function Users(){
                     <section className="grid grid-rows-1 grid-cols-3 w-3/4 text-sm md:text-basem lg:text-base items-center">
                     
                         <span className="ml-10 w-full">Nome: {profile.username}</span>
-                        <span className="ml-20 w-full hidden md:hidden lg:block">Email: {profile.email}</span>
-                        <span className="ml-20 hidden w-full md:hidden lg:block">Quantidade de cadastros: {profile.qtd_cadastros ? profile.qtd_cadastros : 0}</span>
+                        <span className="ml-20 w-full hidden md:hidden lg:block overf">Email: {profile.email}</span>
+                        <span className="ml-20 hidden w-full md:hidden lg:block">Qtd. de cadastros: {profile.qtd_cadastros ? profile.qtd_cadastros : 0}</span>
                     </section>
 
                     </div>

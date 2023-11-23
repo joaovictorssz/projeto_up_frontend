@@ -12,14 +12,15 @@ import { useRouter } from "next/navigation";
 type FormType = {
     dados_pessoais: DadosPessoais,
     dados_moradia: DadosMoradia,
-    situacao_economica_familiar: SituacaoEconomicaFamilair
+    situacao_economica_familiar: SituacaoEconomicaFamilair,
+    observacoes: string
 }
 
 export default function AddFamily(){
 
     const { register, handleSubmit }  = useForm<FormType>()
     const dataDeHoje = new Date();
-    const { user } = useUser()
+    const { user, setUser } = useUser()
 
     const { push } = useRouter()
 
@@ -29,6 +30,7 @@ export default function AddFamily(){
     
     const dataFormatada = `${dia}/${mes}/${ano}`;
 
+    const [tipoDeMoradia, setTipoDeMoradia] = useState<string>('')
     const [familyMembers, setFamilyMembers] = useState<ComposicaoFamiliar[]>([])
     const [member, setMember] = useState<ComposicaoFamiliar>({})
     const addFamilyMember = () =>{
@@ -44,13 +46,15 @@ export default function AddFamily(){
 
     const handleSubmitForm = async (data: FormType) =>{
         console.log(data)
+        console.log(tipoDeMoradia)
 
-        
+
         axios.post(`${process.env.NEXT_PUBLIC_API}/family/register`, {...data, composicao_familiar: familyMembers, cadastrado_por: user?.username, data_de_cadastro: dataFormatada,  id_voluntario: user?._id, cestas_entregues: []})
         .then(res=>{
             console.log(res)
             toast.success("Cadastro realizado com sucesso")
             axios.put(`${process.env.NEXT_PUBLIC_API}/users/update/${user?._id}`, {qtd_cadastros: user?.qtd_cadastros! + 1})
+            setUser({_id: user?._id!, auditor: user?.auditor!, email: user?.email!, password: user?.password!, qtd_cadastros: user?.qtd_cadastros! + 1, username: user?.username!})
             push('/')
         })
         .catch(erro => {
@@ -58,6 +62,10 @@ export default function AddFamily(){
                 toast.error("Esse endereço já foi cadastrado")
             }
         })
+
+
+        
+        
     
     }
 
@@ -76,8 +84,8 @@ export default function AddFamily(){
                     </section>
 
                     <section className="flex flex-col">
-                        <span>Nome social:</span>
-                        <input  {...register('dados_pessoais.nome_social')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
+                        <span>CPF:</span>
+                        <input required  {...register('dados_pessoais.cpf')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
                     </section>
                 </div>
 
@@ -148,19 +156,6 @@ export default function AddFamily(){
                         <span>Telefone 1:</span>
                         <input required {...register('dados_pessoais.telefone_1')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
                     </section>
-
-                    <section className="flex flex-col">
-                        <span>Telefone 2:</span>
-                        <input  {...register('dados_pessoais.telefone_2')} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
-                    </section>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4">
-                    <section className="flex flex-col">
-                        <span>E-mail:</span>
-                        <input  {...register('dados_pessoais.email')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
-                    </section>
-
                 </div>
 
             </section>
@@ -171,10 +166,10 @@ export default function AddFamily(){
                 <div className="grid grid-cols-2 gap-4">
                     <section className="flex flex-col">
                         <span>Tipo de moradia:</span>
-                        <select  {...register('dados_moradia.tipo_de_moradia')} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3">
+                        <select  {...register('dados_moradia.tipo_de_moradia')} onChange={(e)=>setTipoDeMoradia(e.target.value)} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3">
                             <option value="Própria">Própria</option>
                             <option value="Alugada">Alugada</option>
-                            <option value="União Estável">Cedida</option>
+                            <option value="Cedida">Cedida</option>
                             <option value="Financiada">Financiada</option>
                         </select>
                     </section>
@@ -193,36 +188,31 @@ export default function AddFamily(){
                 <div className="grid grid-cols-2 gap-4">
                     
 
+                    {tipoDeMoradia === 'Cedida' ?
+                    
                     <section className="flex flex-col">
-                        <span>Cedida:</span>
-                        <select {...register('dados_moradia.cedida')} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3">
-                            <option value="Sim">Sim</option>
-                            <option value="Não">Não</option>
-                        </select>                    
-                        </section>
-
-                        <section className="flex flex-col">
                         <span>Por quem:</span>
                         <input {...register('dados_moradia.cedida_por_quem')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
                     </section>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                    
-
+                    :
                     <section className="flex flex-col">
-                        <span>Financiada:</span>
-                        <select {...register('dados_moradia.financiada')} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3">
-                            <option value="Sim">Sim</option>
-                            <option value="Não">Não</option>
-                        </select>                    
+                        <span>Por quem:</span>
+                        <input disabled {...register('dados_moradia.cedida_por_quem')} type="text" className="rounded cursor-not-allowed  bg-neutral-300 focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
                     </section>
+                    }
 
-                    <section className="flex flex-col">
+                    {
+                        tipoDeMoradia === 'Financiada' ?
+                        <section className="flex flex-col">
                         <span>Valor do financiamento:</span>
                         <input {...register('dados_moradia.valor_do_financiamento')} type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
                     </section>
-                    
+                    :
+                    <section className="flex flex-col">
+                        <span>Valor do financiamento:</span>
+                        <input disabled {...register('dados_moradia.valor_do_financiamento')} type="text" className="rounded focus:outline-none focus:border-sky-800  cursor-not-allowed  bg-neutral-300 border border-slate-200 p-3" />
+                    </section>
+                    }
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
@@ -279,6 +269,15 @@ export default function AddFamily(){
                     </section>
 
                 </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                    <section className="flex flex-col">
+                        <span>Recebe algum auxílio do governo? Se sim, qual?</span>
+                        <input {...register('situacao_economica_familiar.auxilio_do_governo')} type="text" className="rounded focus:outline-none focus:border-sky-800  bg-neutral-200 border border-slate-200 p-3" />
+
+                    </section>
+
+                </div>
                 
             </section>
 
@@ -298,6 +297,15 @@ export default function AddFamily(){
                             <input  onChange={(e)=>setMember({...member, idade: e.target.value})} type="text" className="rounded focus:outline-none focus:border-sky-800 bg-neutral-200 border border-slate-200 p-3" />
                         </section>
                     </div>
+
+                    <div className="grid grid-cols-1 gap-4">
+                        <section className="flex flex-col">
+                            <span>CPF:</span>
+                            <input onChange={(e)=>setMember({...member, cpf: e.target.value})}  type="text" className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3" />
+                        </section>
+                    </div>
+
+                    
 
                     <div className="grid grid-cols-2 gap-4">
                         <section className="flex flex-col">
@@ -411,6 +419,14 @@ export default function AddFamily(){
                     })}
                 </aside>
                 </div>
+            </section>
+
+            <section  className="border my-4 border-slate-200 p-4 rounded flex flex-col">
+                <h1 className="font-semibold my-4">Observaçoes:</h1>
+
+                <textarea {...register('observacoes')} className="rounded focus:outline-none focus:border-sky-800    bg-neutral-200 border border-slate-200 p-3"></textarea>
+
+                
             </section>
 
             <section  className="border my-4 border-slate-200 p-4 rounded flex flex-col">

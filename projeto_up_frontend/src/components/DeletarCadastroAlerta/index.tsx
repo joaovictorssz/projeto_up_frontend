@@ -18,6 +18,7 @@ export default function DeletarCadastro({_id, id_user}:{_id: string, id_user:str
             setVoluntario(res.data)
         })
     }, [])
+    const { setUser, user} = useUser()
 
 const deletarCadastro = async (_id: string)=>{
     try{
@@ -25,6 +26,8 @@ const deletarCadastro = async (_id: string)=>{
         .then((res)=>{
             if(res.status === 204){
                 axios.put(`${process.env.NEXT_PUBLIC_API}/users/update/${id_user}`, {qtd_cadastros: voluntario?.qtd_cadastros! - 1})
+                setUser({_id: user?._id!, auditor: user?.auditor!, email: user?.email!, password: user?.password!, qtd_cadastros: user?.qtd_cadastros! + 1, username: user?.username!})
+                sessionStorage.setItem('token', JSON.stringify(user))
                 toast.success("Cadastro deletado")
                 window.location.reload()
             }

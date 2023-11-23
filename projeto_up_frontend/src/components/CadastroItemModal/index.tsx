@@ -12,6 +12,8 @@ import SituacaoEconomicaFamiliarDetalhes from './SituacaoEconomicaDetalhes';
 import ComposicaoFamiliarDetalhes from './ComposicaoFamiliar';
 import DeletarCadastro from '../DeletarCadastroAlerta';
 import CestasEntreguesDetalhes from './CestasEntregues';
+import CadastrarCestaAlerta from '../CadastrarCestaAlerta';
+import Observacoes from './Observacoes';
 
 export default function CadastroItemModal({familia}:{familia: Familia}){ 
 
@@ -32,10 +34,11 @@ export default function CadastroItemModal({familia}:{familia: Familia}){
             {currentSection === 2 && 'Situação econômica familiar'}
             {currentSection === 3 && 'Composição familiar'}
             {currentSection === 4 && 'Cestas entregues'}
+            {currentSection === 5 && 'Observações'}
           </span>
           <section>
             {currentSection !== 0 && <button className='mx-4' onClick={()=>{if(currentSection !== 0){setCurrentSection(currentSection-1)}}}><GrPrevious/></button>}
-            <button onClick={()=>{if(currentSection !== 4){setCurrentSection(currentSection+1)}}} className='mx-4'><GrNext className=""/></button>
+            <button onClick={()=>{if(currentSection !== 5){setCurrentSection(currentSection+1)}}} className='mx-4'><GrNext className=""/></button>
           </section>
         </Dialog.Title>
         
@@ -44,12 +47,13 @@ export default function CadastroItemModal({familia}:{familia: Familia}){
         {currentSection === 2 && <SituacaoEconomicaFamiliarDetalhes situacao_economica_familiar={familia.situacao_economica_familiar}/>}
         {currentSection === 3 && <ComposicaoFamiliarDetalhes composicao_familiar={familia.composicao_familiar}/>}
         {currentSection === 4 && <CestasEntreguesDetalhes cestas_entregues={familia.cestas_entregues} _id={familia._id}/>}
+        {currentSection === 5 && <Observacoes observacoes={familia.observacoes ? familia.observacoes : "Vazio"}/>}
         <div className="mt-[25px] flex justify-end">
 
         </div>
-        <footer className='w-full justify-between'>
+        <footer className='w-full flex justify-between'>
           <DeletarCadastro _id={familia._id} id_user={familia.id_voluntario}/>
-          
+          <CadastrarCestaAlerta _id={familia._id} cestas_cadastradas={familia.cestas_entregues}/>
         </footer>
         <span className='mt-4 text-slate-600'>Cadastrado por: {familia.cadastrado_por}</span>
         <Dialog.Close asChild>

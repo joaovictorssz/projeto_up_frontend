@@ -6,6 +6,9 @@ export const APP_ROUTES = {
         },
         add_family:{
             name: '/add_family'
+        },
+        list_families: {
+            name: '/list_families'
         }
     },
     public:{
